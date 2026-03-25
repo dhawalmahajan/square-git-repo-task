@@ -3,6 +3,9 @@
   {
     "id": 1,
     "name": "Repo1",
-    "description": "Desc1"
+    "description": "Desc1",
+    "owner": {
+        "avatar_url": "avUrl"
+    }
   }
 ]

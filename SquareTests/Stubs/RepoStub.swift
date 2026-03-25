@@ -7,10 +7,10 @@
 @testable import Square
 struct RepoStub {
 
-    static let repo1 = Repo(id: 1, name: "Repo1", description: "Desc1")
+    static let repo1 = Repo(id: 1, name: "Repo1", description: "Desc1", avatarUrl: "avUrl")
 
     static let repoList = [
-        Repo(id: 1, name: "Repo1", description: "Desc1"),
-        Repo(id: 2, name: "Repo2", description: "Desc2")
+        Repo(id: 1, name: "Repo1", description: "Desc1", avatarUrl: "avUrl"),
+        Repo(id: 2, name: "Repo2", description: "Desc2", avatarUrl: "avUrl")
     ]
 }
