@@ -34,7 +34,7 @@ final class FetchReposUseCaseTests: XCTestCase {
     useCase.execute(page: 1, perPage: 20) { result in
       switch result {
       case .success(let repos):
-        XCTAssertEqual(repos.count, 2)
+        XCTAssertEqual(repos.count, 3)
         expectation.fulfill()
       case .failure:
         XCTFail()

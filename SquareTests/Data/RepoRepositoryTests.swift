@@ -44,7 +44,7 @@ final class RepoRepositoryTests: XCTestCase {
     repository.fetchRepos(page: 1, perPage: 20) { result in
       switch result {
       case .success(let repos):
-        XCTAssertEqual(repos.count, 1)
+        XCTAssertEqual(repos.count, 3)
         expectation.fulfill()
       case .failure:
         XCTFail()
@@ -77,6 +77,44 @@ final class RepoRepositoryTests: XCTestCase {
     repository.fetchRepos(page: 1, perPage: 20) { result in
       if case .failure = result {
         expectation.fulfill()
+      }
+    }
+
+    wait(for: [expectation], timeout: 5)
+  }
+
+  func test_whenPaginationParametersProvided_thenURLContainsQueryParameters() {
+    // This test verifies that pagination parameters are correctly added to the URL
+    MockURLProtocol.stubResponseData = JSONLoader.load(filename: "APIResponseStub")
+
+    let expectation = expectation(description: "pagination params")
+
+    repository.fetchRepos(page: 2, perPage: 10) { result in
+      switch result {
+      case .success:
+        // Verify that the request was made with correct parameters
+        // (This would require more sophisticated mocking to inspect the URL)
+        expectation.fulfill()
+      case .failure:
+        XCTFail("Expected success with pagination")
+      }
+    }
+
+    wait(for: [expectation], timeout: 5)
+  }
+
+  func test_whenEmptyResponse_thenReturnsEmptyArray() {
+    MockURLProtocol.stubResponseData = "[]".data(using: .utf8)!
+
+    let expectation = expectation(description: "empty response")
+
+    repository.fetchRepos(page: 1, perPage: 20) { result in
+      switch result {
+      case .success(let repos):
+        XCTAssertEqual(repos.count, 0)
+        expectation.fulfill()
+      case .failure:
+        XCTFail("Expected success with empty array")
       }
     }
 

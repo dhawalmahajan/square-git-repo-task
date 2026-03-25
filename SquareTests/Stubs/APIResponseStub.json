@@ -3,9 +3,25 @@
   {
     "id": 1,
     "name": "Repo1",
-    "description": "Desc1",
+    "description": "Description for Repo1",
     "owner": {
-        "avatar_url": "avUrl"
+        "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Repo2",
+    "description": "Description for Repo2",
+    "owner": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Repo3",
+    "description": "Description for Repo3",
+    "owner": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/3?v=4"
     }
   }
 ]

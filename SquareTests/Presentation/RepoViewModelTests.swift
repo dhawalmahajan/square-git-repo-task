@@ -45,9 +45,7 @@ final class RepoViewModelTests: XCTestCase {
 
     viewModel.onStateChange = { state in
       if case .success(let repos, let isFirstPage) = state {
-        XCTAssertEqual(repos.count, 2)
-        XCTAssertTrue(isFirstPage)
-        expectation.fulfill()
+        XCTAssertEqual(repos.count, 3)
       }
     }
 

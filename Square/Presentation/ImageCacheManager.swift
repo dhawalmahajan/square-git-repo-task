@@ -18,6 +18,15 @@ final class ImageCacheManager {
     config.urlCache = URLCache.shared
     self.session = URLSession(configuration: config)
   }
+  #if DEBUG
+    var memoryCache: NSCache<NSString, UIImage> {
+      return cache
+    }
+
+    func clearCache() {
+      cache.removeAllObjects()
+    }
+  #endif
 
   func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
     let key = url.absoluteString as NSString
