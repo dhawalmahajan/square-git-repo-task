@@ -8,10 +8,12 @@
 import Foundation
 
 final class MockURLProtocol: URLProtocol {
-
+    //MARK: properties
     static var stubResponseData: Data?
     static var error: Error?
-    static var statusCode: Int = 200 
+    static var statusCode: Int = 200
+    
+    //MARK: override methods
     override class func canInit(with request: URLRequest) -> Bool {
         true
     }

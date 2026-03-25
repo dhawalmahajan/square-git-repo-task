@@ -42,9 +42,7 @@ final class RepoListUITests: XCTestCase {
            XCTAssertTrue(firstCell.waitForExistence(timeout: 5), "At least one repo cell should be visible")
        }
 
-       // MARK: - Navigation
-
-      
+    
 
        // MARK: - Scrolling
 

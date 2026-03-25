@@ -17,6 +17,7 @@ final class RepoViewModel {
     private let useCase: FetchReposUseCase
     private let scheduler: (@escaping () -> Void) -> Void
     var onStateChange: ((RepoState) -> Void)?
+    
     //MARK: initializer
     init(useCase: FetchReposUseCase,scheduler: @escaping (@escaping () -> Void) -> Void = { DispatchQueue.main.async(execute: $0) }) {
         self.useCase = useCase

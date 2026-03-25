@@ -7,7 +7,7 @@
 
 import Foundation
 final class MockAPIService {
-
+    //MARK: properties
     var shouldFail = false
     var mockData: Data?
 

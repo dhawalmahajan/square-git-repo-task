@@ -24,6 +24,7 @@ final class FetchReposUseCaseTests: XCTestCase {
         super.tearDown()
     }
 
+    //MARK: Test cases
     func test_whenRepositoryReturnsRepos_thenExecuteDeliversRepos() {
 
         let expectation = expectation(description: "usecase")

@@ -32,10 +32,10 @@ final class RepoRepositoryTests: XCTestCase {
         super.tearDown()
     }
 
+    //MARK: Test cases
     func test_whenValidJSONReturned_thenReposAreParsedSuccessfully() {
 
         MockURLProtocol.stubResponseData = JSONLoader.load(filename: "APIResponseStub")
-
 
         let expectation = expectation(description: "repo")
 

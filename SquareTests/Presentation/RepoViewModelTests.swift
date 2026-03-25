@@ -85,12 +85,9 @@ final class RepoViewModelTests: XCTestCase {
     }
     func test_whenRepositoryReturnsEmptyList_thenViewModelEmitsSuccessWithEmptyRepos() {
 
-//        mockRepo = MockRepoRepository()
+
         mockRepo.mockRepos = []
-//
-//        useCase = FetchReposUseCase(repository: mockRepo)
-//        viewModel = RepoViewModel(useCase: useCase, scheduler: { $0() })
-//
+
         let expectation = expectation(description: "empty")
 
         viewModel.onStateChange = { state in
