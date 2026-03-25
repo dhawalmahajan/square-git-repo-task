@@ -7,5 +7,5 @@
 
 //MARK: Protocol
 protocol RepoRepository {
-    func fetchRepos(completion: @escaping (Result<[Repo], Error>) -> Void)
+  func fetchRepos(page: Int, perPage: Int, completion: @escaping (Result<[Repo], Error>) -> Void)
 }
