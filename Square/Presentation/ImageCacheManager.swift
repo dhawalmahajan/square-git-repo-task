@@ -8,15 +8,19 @@
 import UIKit
 
 final class ImageCacheManager {
-  static let shared = ImageCacheManager()
+  static var shared = ImageCacheManager()
 
   private let cache = NSCache<NSString, UIImage>()
   private let session: URLSession
 
-  private init() {
-    let config = URLSessionConfiguration.default
-    config.urlCache = URLCache.shared
-    self.session = URLSession(configuration: config)
+  init(session: URLSession? = nil) {
+    if let session = session {
+      self.session = session
+    } else {
+      let config = URLSessionConfiguration.default
+      config.urlCache = URLCache.shared
+      self.session = URLSession(configuration: config)
+    }
   }
   #if DEBUG
     var memoryCache: NSCache<NSString, UIImage> {

@@ -19,6 +19,7 @@ final class ImageCacheManagerTests: XCTestCase {
     let config = URLSessionConfiguration.ephemeral
     config.protocolClasses = [MockURLProtocol.self]
     session = URLSession(configuration: config)
+    ImageCacheManager.shared = ImageCacheManager(session: session)
   }
 
   override func tearDown() {

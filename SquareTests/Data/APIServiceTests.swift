@@ -18,6 +18,7 @@ final class APIServiceTests: XCTestCase {
     super.setUp()
     let config = URLSessionConfiguration.ephemeral
     config.protocolClasses = [MockURLProtocol.self]
+    config.urlCache = URLCache(memoryCapacity: 10 * 1024 * 1024, diskCapacity: 0, diskPath: nil)
     session = URLSession(configuration: config)
     apiService = APIService(session: session)
   }
@@ -84,7 +85,7 @@ final class APIServiceTests: XCTestCase {
     // Pre-populate cache
     let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
     let cachedResponse = CachedURLResponse(response: response, data: expectedData)
-    URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: url))
+    session.configuration.urlCache?.storeCachedResponse(cachedResponse, for: URLRequest(url: url))
 
     let expectation = expectation(description: "API call returns cached data")
 
@@ -112,14 +113,15 @@ final class APIServiceTests: XCTestCase {
     let expectation = expectation(description: "API call completes and caches")
 
     // When
-    apiService.request(url: url) { result in
+    apiService.request(url: url) { [weak self] result in
       // Then
       switch result {
       case .success(let data):
         XCTAssertEqual(data, expectedData)
 
         // Check if response was cached
-        let cachedResponse = URLCache.shared.cachedResponse(for: URLRequest(url: url))
+        let cachedResponse = self?.session.configuration.urlCache?.cachedResponse(
+          for: URLRequest(url: url))
         XCTAssertNotNil(cachedResponse)
         XCTAssertEqual(cachedResponse?.data, expectedData)
 

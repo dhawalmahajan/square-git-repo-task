@@ -17,6 +17,7 @@ final class RepoRepositoryTests: XCTestCase {
   //MARK: test lifecycle
   override func setUp() {
     super.setUp()
+    URLCache.shared.removeAllCachedResponses()
     let config = URLSessionConfiguration.ephemeral
     config.protocolClasses = [MockURLProtocol.self]
     session = URLSession(configuration: config)
@@ -25,6 +26,7 @@ final class RepoRepositoryTests: XCTestCase {
   }
 
   override func tearDown() {
+    URLCache.shared.removeAllCachedResponses()
     session = nil
     apiService = nil
     repository = nil
