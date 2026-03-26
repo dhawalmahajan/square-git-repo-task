@@ -66,49 +66,71 @@ The ViewController switches on this enum and renders accordingly. There are no b
 
 ## 📁 Project Structure
 
+### Core App
+
 ```
 Square/
-│
-├── App/
-│   ├── AppDelegate.swift
-│   ├── SceneDelegate.swift
-│   └── AppFactory.swift              # Wires full dependency graph
+├── AppDelegate.swift                       # App lifecycle (minimal)
+├── SceneDelegate.swift                     # Window & root VC setup
+├── Factory/
+│   └── AppFactory.swift                    # Dependency graph wiring
 │
 ├── Presentation/
-│   ├── RepoListViewController.swift  # Renders RepoState, zero business logic
-│   └── RepoViewModel.swift           # Owns state, calls UseCase
+│   ├── RepoListViewController.swift        # Table view controller
+│   ├── RepoTableViewCell.swift             # Custom cell with image + labels
+│   ├── RepoViewModel.swift                 # State management & business logic
+│   └── ImageCacheManager.swift             # In-memory image cache
 │
 ├── Domain/
-│   ├── Repo.swift                    # Pure Swift model, no imports
-│   ├── RepoRepository.swift          # Protocol — the boundary
-│   └── FetchReposUseCase.swift       # Single responsibility business rule
+│   ├── Models/
+│   │   └── Repo.swift                      # Domain model (no framework imports)
+│   ├── Repositories/
+│   │   └── RepoRepository.swift            # Protocol boundary
+│   └── Usecases/
+│       └── FetchReposUseCase.swift         # Business rule: fetch paginated repos
 │
 └── Data/
-    ├── APIService.swift              # URLSession wrapper
-    ├── RepoRepositoryImpl.swift      # Implements RepoRepository protocol
-    ├── RepoDTO.swift                 # Codable API response shape
-    └── RepoMapper.swift              # DTO → Domain conversion
+    ├── ApiService/
+    │   └── APIService.swift                # Network layer (URLSession wrapper)
+    ├── RepoRepositoryImpl/
+    │   └── RepoRepositoryImpl.swift         # Implements RepoRepository
+    └── DTO + Mapper/
+        └── RepoDTO.swift                   # API response model + toDomain()
 ```
+
+### Tests
 
 ```
 SquareTests/
+├── Data/
+│   ├── APIServiceTests.swift               # Network decoding & URLError tests
+│   └── RepoRepositoryTests.swift           # MockURLProtocol integration tests
 │
-├── UnitTests/
-│   ├── RepoViewModelTests.swift      # Tests state sequences via MockRepoRepository
-│   ├── FetchReposUseCaseTests.swift  # Tests use case logic in isolation
-│   └── RepoRepositoryTests.swift    # Tests real decoding via MockURLProtocol
+├── Domain/
+│   └── FetchReposUseCaseTests.swift        # UseCase logic tests
+│
+├── Presentation/
+│   ├── RepoViewModelTests.swift            # State transition & error mapping
+│   └── ImageCacheManagerTests.swift        # Caching & deduping logic
 │
 ├── Mocks/
-│   ├── MockRepoRepository.swift     # Fake repo with shouldFail + mockRepos
-│   └── MockAPIService.swift         # Fake network layer
+│   ├── MockAPIService.swift                # Injectable API stub
+│   ├── MockRepoRepository.swift            # Stub with shouldFail flag
+│   └── MockURLProtocol.swift               # Intercepts URLSession calls
 │
-├── Stubs/
-│   ├── RepoStub.swift               # Pre-built Repo objects for tests
-│   └── APIResponseStub.json         # Raw JSON fixture (2 repos)
-│
-└── Helpers/
-    ├── JSONLoader.swift             # Loads .json from test bundle
-    └── MockURLProtocol.swift        # Intercepts URLSession at protocol level
+└── Stubs/
+    ├── RepoStub.swift                      # Pre-built domain objects
+    ├── APIResponseStub.json                # Fixture: sample repos from API
+    └── JSONLoader.swift                    # Helper: loads .json from bundle
+```
+
+### UI Tests
+
+```
+SquareUITests/
+├── Flows/                                  # (Reserved for complex user flows)
+└── Screens/
+    └── RepoListUITests.swift               # Launch, scroll, landscape layout verification
 ```
 
 ---
