@@ -55,7 +55,7 @@ final class RepoListViewController: UIViewController {
       tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-      tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+      tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
     ])
 
     activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +63,7 @@ final class RepoListViewController: UIViewController {
 
     NSLayoutConstraint.activate([
       activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+      activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
     ])
   }
 
