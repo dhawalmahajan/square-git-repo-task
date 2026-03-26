@@ -35,21 +35,36 @@ final class RepoListViewController: UIViewController {
   }
 
   private func setupUI() {
-    tableView.frame = view.bounds
+    tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.dataSource = self
     tableView.delegate = self
     tableView.register(
       RepoTableViewCell.self, forCellReuseIdentifier: RepoTableViewCell.reuseIdentifier)
     tableView.rowHeight = UITableView.automaticDimension
     tableView.estimatedRowHeight = 80
+    tableView.cellLayoutMarginsFollowReadableWidth = false
+    tableView.separatorInset = .zero
+    tableView.layoutMargins = .zero
 
     refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     tableView.refreshControl = refreshControl
 
     view.addSubview(tableView)
 
-    activityIndicator.center = view.center
+    NSLayoutConstraint.activate([
+      tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+      tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+      tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+    ])
+
+    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(activityIndicator)
+
+    NSLayoutConstraint.activate([
+      activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+    ])
   }
 
   @objc private func refreshData() {
