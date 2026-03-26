@@ -164,6 +164,6 @@ No external dependencies. No package manager setup required.
 
 ## 📋 Requirements
 
-- Xcode 15+
-- iOS 16+
-- Swift 5.9+
+- Xcode 16
+- iOS 26
+- Swift 6.2.3
