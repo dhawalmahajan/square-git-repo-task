@@ -9,7 +9,7 @@ import Foundation
 
 final class RepoRepositoryImpl: RepoRepository {
   //MARK: properties
-  static let apiUrl = "https://api.github.com/orgs/square/repos"
+//  static let apiUrl = "https://api.github.com/orgs/square/repos"
 
   private let apiService: APIService
 
@@ -21,13 +21,13 @@ final class RepoRepositoryImpl: RepoRepository {
   //MARK: api call
   func fetchRepos(page: Int, perPage: Int, completion: @escaping (Result<[Repo], Error>) -> Void) {
 
-    var urlComponents = URLComponents(string: RepoRepositoryImpl.apiUrl)!
-    urlComponents.queryItems = [
+    var urlComponents = URLComponents(string: Constant.apiUrl)
+    urlComponents?.queryItems = [
       URLQueryItem(name: "page", value: "\(page)"),
       URLQueryItem(name: "per_page", value: "\(perPage)"),
     ]
 
-    guard let url = urlComponents.url else {
+    guard let url = urlComponents?.url else {
       completion(.failure(URLError(.badURL)))
       return
     }

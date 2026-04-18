@@ -88,10 +88,10 @@ final class ImageCacheManagerTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenImageCached_thenReturnsCachedImageWithoutNetworkCall() {
+  func test_whenImageCached_thenReturnsCachedImageWithoutNetworkCall() throws {
     // Given
-    let image = UIImage(systemName: "heart")!
-    let url = URL(string: "https://example.com/cached.png")!
+    let image = try XCTUnwrap(UIImage(systemName: "heart"))
+    let url = try XCTUnwrap(URL(string: "https://example.com/cached.png"))
 
     // Pre-cache the image directly in memory cache
     let key = url.absoluteString as NSString
@@ -112,13 +112,13 @@ final class ImageCacheManagerTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenImageDownloaded_thenStoredInCache() {
+  func test_whenImageDownloaded_thenStoredInCache() throws {
     // Given
-    let image = UIImage(systemName: "circle")!
-    let imageData = image.pngData()!
+    let image = try XCTUnwrap(UIImage(systemName: "circle"))
+    let imageData = try XCTUnwrap(image.pngData())
     MockURLProtocol.stubResponseData = imageData
 
-    let url = URL(string: "https://example.com/store.png")!
+    let url = try XCTUnwrap(URL(string: "https://example.com/store.png"))
     let expectation = expectation(description: "Image downloaded and cached")
 
     // When
@@ -136,10 +136,10 @@ final class ImageCacheManagerTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenSameImageRequestedMultipleTimes_thenOnlyOneNetworkCall() {
+  func test_whenSameImageRequestedMultipleTimes_thenOnlyOneNetworkCall() throws {
     // Given
-    let image = UIImage(systemName: "square")!
-    let imageData = image.pngData()!
+    let image = try XCTUnwrap(UIImage(systemName: "square"))
+    let imageData = try XCTUnwrap(image.pngData()) 
     MockURLProtocol.stubResponseData = imageData
 
     let url = URL(string: "https://example.com/multiple.png")!

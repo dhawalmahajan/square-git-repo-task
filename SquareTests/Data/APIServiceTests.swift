@@ -32,13 +32,13 @@ final class APIServiceTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_whenValidResponse_thenReturnsData() {
+  func test_whenValidResponse_thenReturnsData() throws {
     // Given
-    let expectedData = "test data".data(using: .utf8)!
+    let expectedData = try XCTUnwrap("test data".data(using: .utf8)) 
     MockURLProtocol.stubResponseData = expectedData
 
     let expectation = expectation(description: "API call completes")
-    let url = URL(string: "https://api.example.com/test")!
+    let url = try XCTUnwrap(URL(string: "https://api.example.com/test"))
 
     // When
     apiService.request(url: url) { result in
@@ -55,12 +55,12 @@ final class APIServiceTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenNetworkError_thenReturnsError() {
+  func test_whenNetworkError_thenReturnsError() throws {
     // Given
     MockURLProtocol.error = URLError(.notConnectedToInternet)
 
     let expectation = expectation(description: "API call fails")
-    let url = URL(string: "https://api.example.com/test")!
+    let url = try XCTUnwrap(URL(string: "https://api.example.com/test"))
 
     // When
     apiService.request(url: url) { result in
@@ -77,13 +77,13 @@ final class APIServiceTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenCachedResponseAvailable_thenReturnsCachedData() {
+  func test_whenCachedResponseAvailable_thenReturnsCachedData() throws {
     // Given
     let expectedData = "cached data".data(using: .utf8)!
-    let url = URL(string: "https://api.example.com/cached")!
+    let url = try XCTUnwrap(URL(string: "https://api.example.com/cached"))
 
     // Pre-populate cache
-    let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
+    let response = try XCTUnwrap(HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)) 
     let cachedResponse = CachedURLResponse(response: response, data: expectedData)
     session.configuration.urlCache?.storeCachedResponse(cachedResponse, for: URLRequest(url: url))
 
@@ -134,3 +134,4 @@ final class APIServiceTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 }
+
