@@ -79,7 +79,7 @@ final class APIServiceTests: XCTestCase {
 
   func test_whenCachedResponseAvailable_thenReturnsCachedData() throws {
     // Given
-    let expectedData = "cached data".data(using: .utf8)!
+    let expectedData = try XCTUnwrap("cached data".data(using: .utf8))
     let url = try XCTUnwrap(URL(string: "https://api.example.com/cached"))
 
     // Pre-populate cache
@@ -104,12 +104,12 @@ final class APIServiceTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenRequestMade_thenResponseIsCached() {
+  func test_whenRequestMade_thenResponseIsCached() throws {
     // Given
-    let expectedData = "response data".data(using: .utf8)!
+    let expectedData = try XCTUnwrap("response data".data(using: .utf8))
     MockURLProtocol.stubResponseData = expectedData
 
-    let url = URL(string: "https://api.example.com/cache-test")!
+    let url = try XCTUnwrap(URL(string: "https://api.example.com/cache-test"))
     let expectation = expectation(description: "API call completes and caches")
 
     // When

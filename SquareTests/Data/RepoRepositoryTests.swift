@@ -105,8 +105,8 @@ final class RepoRepositoryTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenEmptyResponse_thenReturnsEmptyArray() {
-    MockURLProtocol.stubResponseData = "[]".data(using: .utf8)!
+  func test_whenEmptyResponse_thenReturnsEmptyArray() throws {
+    MockURLProtocol.stubResponseData = try XCTUnwrap("[]".data(using: .utf8))
 
     let expectation = expectation(description: "empty response")
 

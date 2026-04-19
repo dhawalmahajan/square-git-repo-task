@@ -34,14 +34,14 @@ final class ImageCacheManagerTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_whenValidImageData_thenReturnsImage() {
+  func test_whenValidImageData_thenReturnsImage() throws {
     // Given
-    let image = UIImage(systemName: "star")!
-    let imageData = image.pngData()!
+    let image = try XCTUnwrap(UIImage(systemName: "star"))
+    let imageData = try XCTUnwrap(image.pngData())
     MockURLProtocol.stubResponseData = imageData
 
     let expectation = expectation(description: "Image loads successfully")
-    let url = URL(string: "https://example.com/image.png")!
+    let url = try XCTUnwrap(URL(string: "https://example.com/image.png"))
 
     // When
     ImageCacheManager.shared.loadImage(from: url) { loadedImage in
@@ -53,13 +53,13 @@ final class ImageCacheManagerTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenInvalidImageData_thenReturnsNil() {
+  func test_whenInvalidImageData_thenReturnsNil() throws {
     // Given
-    let invalidData = "not an image".data(using: .utf8)!
+    let invalidData = try XCTUnwrap("not an image".data(using: .utf8))
     MockURLProtocol.stubResponseData = invalidData
 
     let expectation = expectation(description: "Image load fails")
-    let url = URL(string: "https://example.com/invalid.png")!
+    let url = try XCTUnwrap(URL(string: "https://example.com/invalid.png"))
 
     // When
     ImageCacheManager.shared.loadImage(from: url) { loadedImage in
@@ -71,12 +71,12 @@ final class ImageCacheManagerTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func test_whenNetworkError_thenReturnsNil() {
+  func test_whenNetworkError_thenReturnsNil() throws {
     // Given
     MockURLProtocol.error = URLError(.notConnectedToInternet)
 
     let expectation = expectation(description: "Image load fails with network error")
-    let url = URL(string: "https://example.com/error.png")!
+    let url = try XCTUnwrap(URL(string: "https://example.com/error.png"))
 
     // When
     ImageCacheManager.shared.loadImage(from: url) { loadedImage in
@@ -142,7 +142,7 @@ final class ImageCacheManagerTests: XCTestCase {
     let imageData = try XCTUnwrap(image.pngData()) 
     MockURLProtocol.stubResponseData = imageData
 
-    let url = URL(string: "https://example.com/multiple.png")!
+    let url = try XCTUnwrap(URL(string: "https://example.com/multiple.png"))
     let expectation1 = expectation(description: "First image load")
     let expectation2 = expectation(description: "Second image load")
 
